@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My PWA</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <h1>Say Cheese...</h1>
+
+    <video id="video" autoplay></video>
+    <div class="card" style="width: 18rem;">
+        <img src="/images/doggo.png" alt="Doggo meme" class="card-img-top">
+        <div class="card-body">
+            <p class="card-text"></p>
+        </div>
+    </div>
+
+
+    <script>
+        const video = document.getElementById('video');
+
+        function handleCameraStream(stream) {
+            video.srcObject = stream;
+        }
+
+
+        navigator.mediaDevices.getUserMedia({
+            video: true
+        }).then(handleCameraStream);
+
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration
+                        .scope);
+                }, function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+
+
+        }
+    </script>
+</body>
+
+</html>
